@@ -2,100 +2,57 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deletePoll } from '../actions/index';
+import _ from 'lodash';
 
 class PendingPolls extends Component {
+  constructor(props) {
+    super(props);
+    this.renderAnswers = this.renderAnswers.bind(this);
+  }
   //need to limit polls to like 20
-  renderPendingPolls(pollsData) {
+  renderAnswers(answer, key) {
     return (
-<div>
-      <div>
-        <div className="col-md-12">
-          <h3 className="text-center">Does Joey smell bad?</h3>
-        </div>
-        <div className="col-md-2">
-          <img src='https://developer.bluetooth.org/community/lists/community%20discussion/%22/_layouts/15/images/person.gif?rev=23%22'/>
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">He smells awful</button>
-          </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's the worst</button>
-          </div>
-        </div>
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's ok</button>
-          </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">He's fine</button>
-          </div>
-        </div>
+      <div className="col-md-5">
+        <button className="btn btn-primary">{key}</button>
       </div>
-      <div>
-        <div className="col-md-12">
-          <h3 className="text-center">Does Joey smell bad?</h3>
-        </div>
-        <div className="col-md-2">
-          <img src='https://developer.bluetooth.org/community/lists/community%20discussion/%22/_layouts/15/images/person.gif?rev=23%22'/>
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">He smells awful</button>
+    );
+  }
+
+  renderPendingPolls(pollsData, key) {
+    var photo = pollsData.photo;
+    var question = pollsData.question;
+    var answers = pollsData.answers;
+    console.log('photo', photo);
+    console.log('question:', question);
+    console.log('answers:', answers);
+    console.log('key', key);
+    return (
+        <div key={key}>
+          <div className="col-md-12">
+            <h3 className="text-center">{question}</h3>
           </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's the worst</button>
+          <div className="col-md-2">
+            <img src='https://developer.bluetooth.org/community/lists/community%20discussion/%22/_layouts/15/images/person.gif?rev=23%22'/>
           </div>
-        </div>
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's ok</button>
-          </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">He's fine</button>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="col-md-12">
-          <h3 className="text-center">Does Joey smell bad?</h3>
-        </div>
-        <div className="col-md-2">
-          <img src='https://developer.bluetooth.org/community/lists/community%20discussion/%22/_layouts/15/images/person.gif?rev=23%22'/>
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">He smells awful</button>
-          </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's the worst</button>
+          <div className="col-md-10 center">
+            { _.map(answers, (answer, key) => {
+              return (
+                <div className="col-md-5">
+                  <button className="btn btn-primary">{key}</button>
+                </div>
+              );
+            })}
           </div>
         </div>
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-10 center">
-          <div className="col-md-5">
-          <button className="btn btn-primary">It's ok</button>
-          </div>
-          <div className="col-md-5">
-          <button className="btn btn-primary">He's fine</button>
-          </div>
-        </div>
-      </div>
-      </div>
     );
   }
 
   //{this.props.pendingPolls.map(this.renderPendingPolls)}
   render() {
+    console.log('inside render:', this.props.pendingPolls);
     return (
       <div>
-
-      {this.renderPendingPolls()}
+      {_.map(this.props.pendingPolls, this.renderPendingPolls)}
       </div>
     );
   }
