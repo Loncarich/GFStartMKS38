@@ -12,7 +12,7 @@ class CreatePoll extends Component {
     //const handleSubmit = this.props.handleSubmit;
     return (
       <form onSubmit={handleSubmit(this.props.createPoll)}>
-        <h3>Create A New Poll</h3>
+        <h3 className="text-center">Create A New Poll</h3>
 
         <div className="form-group">
           <label>Picture</label>
